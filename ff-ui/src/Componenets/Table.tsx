@@ -15,7 +15,7 @@ export type Player = {
   managerId: number | null;
 };
 
-const Example = () => {
+const PlayerTable = () => {
   const [data, setData] = useState<Player[]>([]);
   const [uniqueTeams, setUniqueTeams] = useState<string[]>([]);
   const [uniquePositions, setUniquePositions] = useState<string[]>([]);
@@ -107,4 +107,4 @@ const Example = () => {
   return <MaterialReactTable table={table} />;
 };
 
-export default Example;
+export default PlayerTable;

@@ -1,13 +1,25 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Example from './Componenets/Table';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import PlayerTable from './Componenets/Table';
+import AddManager from './Componenets/AddManager';
 
 function App() {
   return (
-    <div className="App">
-      <Example />
-    </div>
+    <BrowserRouter> 
+    <Routes> 
+
+      <Route path="/" element = {<PlayerTable />} />
+      <Route path="/admin" element = {<AddManager />} />
+
+    </Routes>
+
+    </BrowserRouter>
+    // <div className="App">
+    //   <PlayerTable />
+    //   <AddManager />
+    // </div>
   );
 }
 
