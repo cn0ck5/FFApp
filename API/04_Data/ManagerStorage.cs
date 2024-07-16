@@ -30,7 +30,7 @@ public class ManagerStorage : IManagerStorage
 
     public async Task<string> DeleteManager(string managerName)
     {
-        Manager? managerToDelete = await _dataContext.managers.FirstOrDefaultAsync(e => e.TeamName == managerName);
+        Manager managerToDelete = await _dataContext.managers.FirstOrDefaultAsync(e => e.TeamName == managerName);
         _dataContext.managers.Remove(managerToDelete);
         await _dataContext.SaveChangesAsync();
         return "Deleted";
@@ -45,7 +45,7 @@ public class ManagerStorage : IManagerStorage
         }
         else
         {
-            Manager? managerToUpdate = await _dataContext.managers.FirstOrDefaultAsync(m => m.TeamName == managerName);
+            Manager managerToUpdate = await _dataContext.managers.FirstOrDefaultAsync(m => m.TeamName == managerName);
             managerToUpdate.Draft_Position = pos;
             await _dataContext.SaveChangesAsync();
             return managerToUpdate;
