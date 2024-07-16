@@ -32,10 +32,12 @@ public class PlayerStorage : IPlayerStorage
     {
 
         Player playerToUnDraft = await _dataContext.players.FirstOrDefaultAsync(p => p.Rank == rank);
-        if (playerToUnDraft.ManagerId == null){
+        if (playerToUnDraft.ManagerId == null)
+        {
             throw new Exception("Player is not drafted yet.");
         }
-        else{
+        else
+        {
             playerToUnDraft.ManagerId = null;
             await _dataContext.SaveChangesAsync();
             return playerToUnDraft;
@@ -46,7 +48,4 @@ public class PlayerStorage : IPlayerStorage
     {
         return await _dataContext.players.ToListAsync();
     }
-
-
-
 }
