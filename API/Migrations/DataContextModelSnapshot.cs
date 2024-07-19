@@ -22,6 +22,32 @@ namespace API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Models.DraftOrder", b =>
+                {
+                    b.Property<Guid>("PointlessId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Overall_Pick")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("PlayerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Round")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoundPick")
+                        .HasColumnType("int");
+
+                    b.HasKey("PointlessId");
+
+                    b.ToTable("DraftOrder");
+                });
+
             modelBuilder.Entity("Models.Manager", b =>
                 {
                     b.Property<Guid>("ManagerId")
@@ -47,7 +73,6 @@ namespace API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TeamName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("WR_Count")
@@ -60,11 +85,9 @@ namespace API.Migrations
 
             modelBuilder.Entity("Models.Player", b =>
                 {
-                    b.Property<int>("Rank")
+                    b.Property<Guid>("PlayerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Rank"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Bye")
                         .HasColumnType("int");
@@ -73,21 +96,21 @@ namespace API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Player_Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PosRk")
                         .HasColumnType("int");
 
                     b.Property<string>("Position")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("int");
 
                     b.Property<string>("Team")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Rank");
+                    b.HasKey("PlayerId");
 
                     b.ToTable("players");
                 });

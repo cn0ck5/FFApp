@@ -25,6 +25,8 @@ builder.Services.AddScoped<IManagerStorage, ManagerStorage>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
 builder.Services.AddScoped<IPlayerStorage, PlayerStorage>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
+builder.Services.AddScoped<IDraftOrderService, DraftOrderService>();
+builder.Services.AddScoped<IDraftOrderStorage, DraftOrderStorage>();
 
 // Add services to the container.
 builder.Services.AddControllers();

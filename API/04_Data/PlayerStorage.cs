@@ -48,4 +48,12 @@ public class PlayerStorage : IPlayerStorage
     {
         return await _dataContext.players.ToListAsync();
     }
+
+    public async Task<Player> AddNewPlayer(Player newPlayer)
+    {
+       _dataContext.Add(newPlayer);
+       await _dataContext.SaveChangesAsync();
+       return newPlayer;
+
+    }
 }

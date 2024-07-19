@@ -57,4 +57,6 @@ public class ManagerStorage : IManagerStorage
         return await _dataContext.managers.ToListAsync();
     }
 
+
+
 }
