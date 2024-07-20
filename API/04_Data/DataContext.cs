@@ -19,8 +19,6 @@ public class DataContext : DbContext
         modelBuilder.Entity<DraftOrder>()
             .Property(d => d.PlayerId)
             .IsRequired(false); // Explicitly configure PlayerId as nullable
-
-        // Other configurations if necessary
     }
 
 
