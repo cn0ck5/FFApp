@@ -17,7 +17,7 @@ public class DraftOrderStorage : IDraftOrderStorage
     public async Task<List<DraftOrder>> SetDraftOrder(int totalPicks)
     {
         List<DraftOrder> draftList = new();
-        int managerCount = GetManagerCount();
+        int managerCount = await GetManagerCount();
         int pickOrder = 0;
         for (int i = 1; i < totalPicks+1; i++)
         {
@@ -68,9 +68,9 @@ public class DraftOrderStorage : IDraftOrderStorage
 
     }
 
-    public int GetManagerCount()
+    public async Task<int> GetManagerCount()
     {
-        return _dataContext.managers.Count();
+       return await _dataContext.managers.CountAsync();
     }
 
     // public Task<DraftOrder> SetManagerToPick(int pick)

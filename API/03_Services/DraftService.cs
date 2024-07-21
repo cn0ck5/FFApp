@@ -16,7 +16,7 @@ public class DraftOrderService : IDraftOrderService
 
     public async Task<List<DraftOrder>> SetDraftOrder (int rounds)
     {
-        int managerCount = _draftStorage.GetManagerCount();
+        int managerCount = await _draftStorage.GetManagerCount();
         int totalPicks = managerCount * rounds;
 
         return await _draftStorage.SetDraftOrder(totalPicks);

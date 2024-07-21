@@ -9,7 +9,7 @@ interface Manager {
 
 function SetManagerDraftPosition() {
     const [managers, setManagers] = useState<Manager[]>([]);
-    const [selectedManager, setSelectedManager] = useState<Manager>();
+    // const [selectedManager, setSelectedManager] = useState<Manager>();
     const [formData, setFormData] = useState({
         teamName: "",
         pickNum: 0
