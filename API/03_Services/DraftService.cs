@@ -20,16 +20,5 @@ public class DraftOrderService : IDraftOrderService
         int totalPicks = managerCount * rounds;
 
         return await _draftStorage.SetDraftOrder(totalPicks);
-
-
     }
-
-    public async Task<DraftOrder> DraftPlayer (int playerRank, int draftPosition, Guid managerId)
-    {
-        return await _draftStorage.SetDraftedPlayer(playerRank, draftPosition, managerId);
-    }
-
-
-
-
 }

@@ -13,9 +13,9 @@ public class PlayerService : IPlayerService
         _playerStorage = efRepoFromBuilder;
     }
 
-    public async Task<Player> SetAsDrafted(int rank, Guid managerId)
+    public async Task<Player> SetAsDrafted(Guid playerId, Guid managerId, int draftPosition)
     {
-        Player playerToDraft = await _playerStorage.SetAsDrafted(rank, managerId);
+        Player playerToDraft = await _playerStorage.SetAsDrafted(playerId, managerId,draftPosition);
         return playerToDraft;
     }
     public async Task<Player> UnDraft(int rank)

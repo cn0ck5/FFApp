@@ -13,16 +13,46 @@ public class PlayerStorage : IPlayerStorage
 
     }
 
-    public async Task<Player> SetAsDrafted(int rank, Guid managerId)
+    public async Task<Player> SetAsDrafted(Guid playerId, Guid managerId, int draftPosition)
     {
-        Player playerToDraft = await _dataContext.players.FirstOrDefaultAsync(p => p.Rank == rank);
+        Player playerToDraft = await _dataContext.players.FirstOrDefaultAsync(p => p.PlayerId == playerId);
+        
         if (playerToDraft.ManagerId != null)
         {
             throw new Exception("Player is already drafted.");
         }
         else
         {
+            DraftOrder draftOrder = await _dataContext.DraftOrder.FirstOrDefaultAsync(d => d.Overall_Pick == draftPosition);
+            Manager manager = await _dataContext.managers.FirstOrDefaultAsync(m => m.ManagerId == managerId);
+            
+            draftOrder.PlayerId = playerId;
             playerToDraft.ManagerId = managerId;
+
+            switch(playerToDraft.Position)
+            {
+                case "WR":
+                    manager.WR_Count +=1;
+                    break;
+                case "QB":
+                    manager.QB_Count +=1;
+                    break;
+                case "RB":
+                    manager.RB_Count +=1;
+                    break;
+                case "TE":
+                    manager.TE_Count +=1;
+                    break;
+                case "DST":
+                    manager.DST_Count +=1;
+                    break;
+                case "K":
+                    manager.K_Count +=1;
+                    break;
+                default: 
+                    throw new Exception ("Position not found");                    
+            }
+
             await _dataContext.SaveChangesAsync();
             return playerToDraft;
         }

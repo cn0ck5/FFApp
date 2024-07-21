@@ -14,11 +14,11 @@ public class PlayerController : ControllerBase
     }
 
     [HttpPatch("Player/DraftPlayer")]
-    public async Task<ActionResult<Player>> SetAsDrafted(int rank, Guid managerId)
+    public async Task<ActionResult<Player>> SetAsDrafted(Guid playerId, Guid managerId, int draftPosition)
     {
         try
         {
-            Player playertoDraft = await _playerService.SetAsDrafted(rank, managerId);
+            Player playertoDraft = await _playerService.SetAsDrafted(playerId, managerId, draftPosition);
             return Ok(playertoDraft);
         }
         catch (Exception e)
@@ -80,7 +80,6 @@ public class PlayerController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-
     }
 
 
