@@ -7,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useEffect, useState } from 'react';
 
 export type Manager = {
     managerId: string;
@@ -19,12 +18,13 @@ export type Manager = {
     tE_Count: number;
     dsT_Count: number;
     k_Count: number;
-
 };
 
+interface TeamTableProps {
+    managers: Manager[];
+}
 
-
-export default function AllTeamTable() {
+export default function AllTeamTable({ managers }: TeamTableProps) {
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -46,53 +46,6 @@ export default function AllTeamTable() {
         },
     }));
 
-    function createData(
-        managerId: string,
-        teamName: string,
-        draft_Position: number,
-        qB_Count: number,
-        rB_Count: number,
-        wR_Count: number,
-        tE_Count: number,
-        dsT_Count: number,
-        k_Count: number,
-    ) {
-        return { managerId, teamName, draft_Position, qB_Count, rB_Count, wR_Count, tE_Count, dsT_Count, k_Count };
-    }
-
-    const [data, setData] = useState<Manager[]>([]);
-
-    useEffect(() => {
-        // Replace 'your-api-endpoint' with your actual API endpoint
-        fetch('http://localhost:5163/Manager/GetAllManagers')
-            .then((response) => response.json())
-            
-            .then((data: Manager[]) => {
-                const sortedData = data.sort((a, b) => a.draft_Position - b.draft_Position);
-                setData(data);
-                // setUniqueTeams([...new Set(data.map((item) => item.managerId))]);
-                // setUniquePositions([...new Set(data.map((item) => item.draftPosition))]);
-            })
-            .catch((error) => console.error('Error fetching data:', error));
-    }, []);
-
-    const rows = data.map((manager) =>
-        createData(
-            manager.managerId,
-            manager.teamName,
-            manager.draft_Position,
-            manager.qB_Count,
-            manager.rB_Count,
-            manager.wR_Count,
-            manager.tE_Count,
-            manager.dsT_Count,
-            manager.k_Count
-        )
-    );
-
-
-
-
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -109,18 +62,18 @@ export default function AllTeamTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((data) => (
-                        <StyledTableRow key={data.managerId}>
+                    {managers.map((manager) => (
+                        <StyledTableRow key={manager.managerId}>
                             <StyledTableCell component="th" scope="row">
-                                {data.teamName}
+                                {manager.teamName}
                             </StyledTableCell>
-                            <StyledTableCell align="right">{data.draft_Position}</StyledTableCell>
-                            <StyledTableCell align="right">{data.qB_Count}</StyledTableCell>
-                            <StyledTableCell align="right">{data.rB_Count}</StyledTableCell>
-                            <StyledTableCell align="right">{data.wR_Count}</StyledTableCell>
-                            <StyledTableCell align="right">{data.tE_Count}</StyledTableCell>
-                            <StyledTableCell align="right">{data.dsT_Count}</StyledTableCell>
-                            <StyledTableCell align="right">{data.k_Count}</StyledTableCell>
+                            <StyledTableCell align="right">{manager.draft_Position}</StyledTableCell>
+                            <StyledTableCell align="right">{manager.qB_Count}</StyledTableCell>
+                            <StyledTableCell align="right">{manager.rB_Count}</StyledTableCell>
+                            <StyledTableCell align="right">{manager.wR_Count}</StyledTableCell>
+                            <StyledTableCell align="right">{manager.tE_Count}</StyledTableCell>
+                            <StyledTableCell align="right">{manager.dsT_Count}</StyledTableCell>
+                            <StyledTableCell align="right">{manager.k_Count}</StyledTableCell>
                         </StyledTableRow>
                     ))}
                 </TableBody>

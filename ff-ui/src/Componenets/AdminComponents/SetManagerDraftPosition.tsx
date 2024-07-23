@@ -1,31 +1,22 @@
 import { mainModule } from "process";
 import { useState, useEffect } from "react";
+import { Manager } from "../AllTeamTable";
 
-interface Manager {
-    teamName: string;
-    managerId: string;
+
+interface SetDraftPosProps {
+    managers: Manager[];
 }
 
 
-function SetManagerDraftPosition() {
-    const [managers, setManagers] = useState<Manager[]>([]);
+
+function SetManagerDraftPosition({managers}: SetDraftPosProps) {
+    
     // const [selectedManager, setSelectedManager] = useState<Manager>();
     const [formData, setFormData] = useState({
         teamName: "",
         pickNum: 0
     });
 
-    useEffect(() => {
-        try {
-            fetch("http://localhost:5163/Manager/GetAllManagers")
-                .then((AllManagers) => AllManagers.json())
-                .then((data) => {
-                    setManagers(data);
-                });
-        } catch (error) {
-            console.error("Error loading managers: ", error);
-        }
-    }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -39,13 +30,17 @@ function SetManagerDraftPosition() {
 
         event.preventDefault();
         try {
-            await fetch(`http://localhost:5163/Manager/SetDraftPosition?pos=${formData.pickNum}&managerName=${formData.teamName}`,
+           const response = await fetch(`http://localhost:5163/Manager/SetDraftPosition?pos=${formData.pickNum}&managerName=${formData.teamName}`,
                 {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
                     }
                 })
+                if(!response.ok)
+                {
+                    alert(await response.text());
+                }
         }
         catch (error) {
             console.error("Error setting draft position: ", error);
@@ -68,7 +63,7 @@ function SetManagerDraftPosition() {
                     Team Name
                 </option>
                 {managers
-                    ? managers.map((manager) => {
+                    ? managers.map((manager:Manager) => {
                         return (
                             <option key={manager.managerId}>
                                 {manager.teamName}
