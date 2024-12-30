@@ -4,6 +4,7 @@ import {
   useMaterialReactTable,
   type MRT_ColumnDef,
 } from 'material-react-table';
+import FullPageLayout from './BaseComponent/FullPageLayout';
 
 export type Player = {
   rank: number;
@@ -69,7 +70,7 @@ const PlayerTable = () => {
       },
       {
         accessorKey: 'managerId',
-        header: 'Manager Status',
+        header: 'Availability',
         Cell: ({ cell }) => {
           const value = cell.getValue<number | null>();
           return value === null ? 'Available' : 'Drafted';
@@ -104,7 +105,10 @@ const PlayerTable = () => {
     },
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <MaterialReactTable table={table} />
+  );
+  
 };
 
 export default PlayerTable;
