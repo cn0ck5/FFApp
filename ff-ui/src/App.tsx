@@ -5,11 +5,11 @@ import AdminNav from './Componenets/AdminComponents/AdminNav';
 import { useState, useEffect } from 'react';
 import { Manager } from './Componenets/AllTeamTable';
 import DraftTable from './Componenets/DraftComponents/DraftTable';
-import DraftList from './Componenets/DraftComponents/DraftList';
+import DraftList from './Componenets/AdminComponents/DraftList';
 import FullPageLayout from './Componenets/BaseComponent/FullPageLayout';
 function App() {
 
-  const [managers, setManagers] = useState<Manager[]>([]);
+const [managers, setManagers] = useState<Manager[]>([]);
 
 
 
@@ -20,7 +20,7 @@ useEffect(() => {
 
       .then((data: Manager[]) => {
         const sortedData = data.sort((a, b) => a.draft_Position - b.draft_Position);
-        setManagers(data);
+        setManagers(sortedData);
         // setUniqueTeams([...new Set(data.map((item) => item.managerId))]);
         // setUniquePositions([...new Set(data.map((item) => item.draftPosition))]);
       })
